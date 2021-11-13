@@ -44,9 +44,10 @@ router.post('/login', async (req, res) => {
 
         const inputPassword = req.body.password;
         
-        originalPassword != inputPassword && 
-            res.status(401).json("Wrong Password");
-
+      if (originalPassword != inputPassword) {
+        res.status(401).json("Wrong Password");
+          
+      } else {
         const accessToken = jwt.sign(
         {
             id: user._id,
@@ -58,6 +59,9 @@ router.post('/login', async (req, res) => {
   
         const { password, ...others } = user._doc;  
         res.status(200).json({...others, accessToken});
+
+      }
+
 
     }catch(err){
         res.status(500).json(err);
