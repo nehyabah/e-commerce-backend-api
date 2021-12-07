@@ -28,6 +28,16 @@ app.use("/api/carts", cartRoute);
 app.use("/api/orders", orderRoute);
 app.use("/api/checkout", stripeRoute);
 
+
+
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname, '/client/build', 'index.html'));
+// })
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static( "/client/build"));
+}
+
 app.listen(process.env.PORT || 5001, () => {
   console.log("Backend server is running!");
 });
